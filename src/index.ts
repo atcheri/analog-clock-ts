@@ -14,6 +14,7 @@ const toggleMode = () => {
   if (!body) {
     return;
   }
+  toggle?.classList.toggle('active');
   if (body.classList.contains('light')) {
     body.classList.remove('light');
     body.classList.add('dark');
