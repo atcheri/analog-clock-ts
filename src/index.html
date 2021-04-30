@@ -4,11 +4,29 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Snowpack starter kit</title>
+    <link rel="stylesheet" href="style.css" />
+    <title>Analog Worl Clock in HTML - CSS - JS</title>
   </head>
-  <body>
-    <h1>Snowpack starter kit</h1>
-    <button id="click-btn">click me</button>
+  <body class="dark">
+    <div class="toggle"></div>
+    <div class="clock">
+      <div class="hour">
+        <div class="hr"></div>
+      </div>
+      <div class="min">
+        <div class="mn"></div>
+      </div>
+      <div class="sec">
+        <div class="sc"></div>
+      </div>
+    </div>
+    <div class="countries">
+      <div class="country" data-zone="Europe/Paris">Paris</div>
+      <div class="country" data-zone="Asia/Tokyo">Tokyo</div>
+      <div class="country" data-zone="Asia/Kolkata">New Delhi</div>
+      <div class="country" data-zone="Asia/Shanghai">Beijing</div>
+      <div class="country" data-zone="America/New_York">New-York</div>
+    </div>
     <script type="module" src="/index.js"></script>
   </body>
 </html>

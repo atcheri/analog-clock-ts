@@ -1,9 +1,11 @@
 /** @type {import("snowpack").SnowpackUserConfig } */
 module.exports = {
   mount: {
-    src: '/'
+    src: '/',
+    public: '/public/'
   },
   alias: {
     '@': './src'
-  }
+  },
+  plugins: ['@snowpack/plugin-sass']
 };
