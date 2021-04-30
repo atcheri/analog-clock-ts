@@ -1,3 +1,5 @@
+import moment from 'moment-timezone';
+
 const degree = 6;
 const hr = document.querySelector('.hr');
 const mn = document.querySelector('.mn');
@@ -24,54 +26,46 @@ const toggleMode = () => {
 
 toggle?.addEventListener('click', toggleMode);
 
-const updateClock = (day: Date) => {
+const updateClock = (time: moment.Moment) => {
   if (!hr || !mn || !sc) {
     return;
   }
-  const hours = day.getHours() * 30;
-  const mins = day.getMinutes() * degree;
-  const secs = day.getSeconds() * degree;
+  const hours = time.hours() * 30;
+  const mins = time.minutes() * degree;
+  const secs = time.seconds() * degree;
   hr.setAttribute('style', `transform: rotateZ(${hours + mins / 12}deg)`);
   mn.setAttribute('style', `transform: rotateZ(${mins}deg)`);
   sc.setAttribute('style', `transform: rotateZ(${secs}deg)`);
 };
 
-const id = setInterval(() => {
-  if (!hr || !mn || !sc) {
-    clearInterval(id);
-    return;
-  }
-  const day = new Date();
-  updateClock(day);
-}, secondInterval);
+const zoneParis = 'Europe/Paris';
 
+const initClock = () => {
+  let defaultZone = moment.tz.guess();
+  updateClock(moment().tz(defaultZone));
 
-const fetchFromWorldTimeApi = async (zone: string): Promise<string> => {
-  const resp = await fetch(`http://worldtimeapi.org/api/timezone/${zone}`);
-  const json = await resp.json();
-  return json.datetime;
-};
+  const setZone = (zone: string) => {
+    defaultZone = zone;
+  };
 
-const changeTimezone = async (zone: string) => {
-  const dt = await fetchFromWorldTimeApi(zone);
-  console.log('dt:', dt)
-  return;
-};
+  const id = setInterval(() => {
+    if (!hr || !mn || !sc) {
+      clearInterval(id);
+      return;
+    }
+    const time = moment().tz(defaultZone);
+    updateClock(time);
+  }, secondInterval);
 
-
-countries.forEach((c) => {
-  const zone = c.getAttribute('data-zone');
-  if (!zone) {
-    return;
-  }
-  c.addEventListener('click', () => {
-    changeTimezone(zone);
+  countries.forEach((c) => {
+    c.addEventListener('click', () => {
+      setZone(c.getAttribute('data-zone') || zoneParis);
+      countries.forEach((c) => {
+        c.classList.remove('current');
+      });
+      c.classList.add('current');
+    });
   });
-});
+};
 
-
-
-
-
-
-updateClock(new Date());
+initClock();

@@ -119,6 +119,7 @@ body {
     justify-content: center;
     position: absolute;
     border-radius: 50%;
+    transition: all 1s ease;
   }
   .hr:before {
     content: '';
@@ -176,8 +177,8 @@ body {
     cursor: pointer;
     padding: 0.4rem;
     &.current {
-      font-size: 1.2rem;
       font-weight: 900;
+      text-decoration: underline;
     }
   }
 }
